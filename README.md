@@ -1,4 +1,4 @@
 agregator_0
 ===========
 
-Simple site content-agragator(images, short notes)
+Simple site content-agregator(images, short notes)
