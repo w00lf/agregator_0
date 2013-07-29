@@ -3,19 +3,9 @@
   %h1=t '.title', :default => model_class.model_name.human.pluralize
   = render 'form'
   %ul{ class: 'thumbnails', id: 'attachments'}
-    - @attachments.each do |attachment|
-      %li.span2
-        %div.thumbnail
-          %a{ href: attachment.file.url }
-            = image_tag  attachment.file.url(:thumb)
-          %p
-            = truncate(attachment.file_file_name, length: 12)
-            %br 
-            = attachment.created_at
-          = link_to 'Delete', attachment_path(attachment), method: :delete
 
 :javascript
   $(function() {
-    window.router = new Agrigator.Routers.AttachmentsRouter({ attachments: #{@attachments_json} });
+    window.router = new Agrigator.Routers.AttachmentsRouter({ attachments: #{@attachments_json.html_safe} });
     Backbone.history.start();
   });

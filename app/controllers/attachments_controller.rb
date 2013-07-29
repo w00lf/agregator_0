@@ -76,15 +76,11 @@ class AttachmentsController < ApplicationController
 
   private
   def attachments_to_json attachments
-    (attachments.map {|attachment| {
-        "name" => attachment.file_file_name,
-        "annotation" => attachment.annotation,
+    (attachments.map {|attachment| 
+      attachment.attributes.merge({
         "url" => attachment.file.url(:original),
-        "thumbnail_url" => attachment.file.url(:thumb),
-        "delete_url" => attachment_path(attachment),
-        "delete_type" => "DELETE",
-        "created_at" => attachment.created_at
-        }
+        "thumbnail_url" => attachment.file.url(:thumb)
+        })
       }
     ).to_json
   end

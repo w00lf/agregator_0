@@ -11,11 +11,9 @@ class Agrigator.Routers.AttachmentsRouter extends Backbone.Router
 
   newAttachment: ->
     @view = new Agrigator.Views.Attachments.NewView(collection: @attachments)
-    $("#attachments").html(@view.render().el)
 
   index: ->
     @view = new Agrigator.Views.Attachments.IndexView(attachments: @attachments)
-    $("#attachments").html(@view.render().el)
     bind_pretty_image()
 
   show: (id) ->
