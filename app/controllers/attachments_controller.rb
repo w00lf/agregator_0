@@ -1,10 +1,10 @@
 class AttachmentsController < ApplicationController
   def index
-    @attachments = Attachment.paginate(page: params[:page], per_page: params[:per_page])
-    @attachments_json = attachments_to_json(@attachments)
+    @attachments = Attachment.paginate(page: params[:page], per_page: (params[:per_page] || '15'))
+    @attachments_json = { total_entries: @attachments.total_entries, results: attachments_to_json(@attachments) }
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json:{ total_entries: @attachments.total_entries, results: @attachments_json } }
+      format.json { render json: @attachments_json }
     end
   end
 

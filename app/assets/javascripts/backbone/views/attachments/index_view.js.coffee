@@ -5,11 +5,10 @@ class Agrigator.Views.Attachments.IndexView extends Backbone.View
   el: '#attachments'
 
   initialize: () ->
-    @collection.bind('reset', @addAll)
+    @collection.on('add', @addOne, @)
     @render()
 
   addAll: () =>
-    @$el.html('')
     @collection.forEach(@addOne, @)
     @bind_pretty_image()
 
@@ -39,7 +38,6 @@ class Agrigator.Views.Attachments.IndexView extends Backbone.View
         $("#progress").hide()
         response = data.result[0]
         last = self.collection.add([response]).last()
-        self.addOne last
 
       progressall: (e, data) ->
         progress = parseInt(data.loaded / data.total * 100, 10)

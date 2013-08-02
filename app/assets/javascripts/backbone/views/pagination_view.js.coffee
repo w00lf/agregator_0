@@ -2,19 +2,30 @@ class Agrigator.Views.PaginatedView extends Backbone.View
 
   template: JST["backbone/templates/pagination"]
 
-  events:
-    "click #pages a" : "change_page"
-    "click #per_pages a" : "change_quantity"
-    "click .next a" : "next_page"
-    "click .previus a" : "previus_page"
-
   el: '#pagination'
+
+  events:
+    "click .more" : "next_page"
 
   page_show: 6
 
   initialize: (params) ->
-    @collection.on('reset', @render, @)
+    #@collection.on('add', @render, @)
+    $(window).scroll(@detect_scroll);
     @render()
+
+  isScrolledIntoView: (elem) ->
+    docViewTop = $(window).scrollTop()
+    docViewBottom = docViewTop + $(window).height()
+    elemTop = $(elem).offset().top
+    elemBottom = elemTop + $(elem).height()
+    (elemBottom <= docViewBottom) and (elemTop >= docViewTop)
+
+  detect_scroll: =>
+    console.log('scrolled')
+    if (this.isScrolledIntoView(@el)) 
+      @next_page()
+
 
   render: (eventName) -> 
     @page_show = 6
@@ -71,13 +82,13 @@ class Agrigator.Views.PaginatedView extends Backbone.View
     @collection.page_active = 1
     @collection.fetch_w_params(true)
 
-  next_page: (e) ->
-    e.preventDefault()
+  next_page: ->
     page = @collection.page_active + 1
     if (page > @page_count) 
-      page = @page_count
+      return
     @collection.page_active = page
     @collection.fetch_w_params(false)
+
 
   previus_page: (e) ->  
     e.preventDefault()

@@ -1,6 +1,7 @@
 class Agrigator.Routers.AttachmentsRouter extends Backbone.Router
   initialize: (options) ->
-    @attachments = new Agrigator.Collections.AttachmentsCollection(options.attachments)
+    @attachments = new Agrigator.Collections.AttachmentsCollection(options.attachments.results)
+    @attachments.total_entries = options.attachments.total_entries
 
   routes:
     "new"      : "newAttachment"
