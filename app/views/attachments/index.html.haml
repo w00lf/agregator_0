@@ -3,9 +3,10 @@
   %h1=t '.title', :default => model_class.model_name.human.pluralize
   = render 'form'
   %ul{ class: 'thumbnails', id: 'attachments'}
+  %div#pagination
 
 :javascript
   $(function() {
-    window.router = new Agrigator.Routers.AttachmentsRouter({ attachments: #{@attachments_json.html_safe} });
+    window.router = new Agrigator.Routers.AttachmentsRouter({ attachments: #{@attachments_json.to_json.html_safe} });
     Backbone.history.start();
   });

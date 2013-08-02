@@ -13,7 +13,9 @@
 //= require jquery
 //= require jquery_ujs
 //= require twitter/bootstrap
-//= require jquery-fileupload
+//= require file_upload/vendor/jquery.ui.widget
+//= require file_upload/jquery.fileupload
+//= require file_upload/jquery.iframe-transport
 //= require underscore
 //= require backbone
 //= require backbone_rails_sync

@@ -5,26 +5,48 @@ class Agrigator.Views.Attachments.IndexView extends Backbone.View
   el: '#attachments'
 
   initialize: () ->
-    @options.attachments.bind('reset', @addAll)
+    @collection.bind('reset', @addAll)
     @render()
 
   addAll: () =>
-    @options.attachments.each(@addOne)
+    @$el.html('')
+    @collection.forEach(@addOne, @)
+    @bind_pretty_image()
 
   addOne: (attachment) =>
-    console.log(attachment)
     view = new Agrigator.Views.Attachments.AttachmentView({model : attachment})
-    @$el.append(view.render().el)
+    @$el.append($(view.render().el))
+    @bind_pretty_image()
+
+  bind_pretty_image: ->
+    $("#attachments .thumbnail > a").prettyPhoto(
+      autoplay_slideshow: false
+      opacity: 0.80
+      allow_resize: true 
+    )
+
+  bind_file_upload: ->
+    self = @
+    $("#progress").hide()
+    $("#fileupload").fileupload(
+      url: "/attachments"
+      dataType: "json"
+      add: (e, data) ->
+        $("#progress").show()
+        data.submit()
+
+      done: (e, data) ->
+        $("#progress").hide()
+        response = data.result[0]
+        last = self.collection.add([response]).last()
+        self.addOne last
+
+      progressall: (e, data) ->
+        progress = parseInt(data.loaded / data.total * 100, 10)
+        $("#progress .bar").css "width", progress + "%"
+    ).prop("disabled", not $.support.fileInput).parent().addClass (if $.support.fileInput then `undefined` else "disabled")
 
   render: =>
-    self = @
-    $("#fileupload").fileupload(
-    ).bind("fileuploaddone", (e, data) ->
-      response = data.result[0]
-      last = self.options.attachments.add([response]).last()
-      self.addOne last
-      $(this).find('.files').html('')
-      bind_pretty_image()
-    )
+    @bind_file_upload()
     @addAll()
     return this

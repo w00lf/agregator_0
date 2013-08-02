@@ -16,7 +16,7 @@ group :assets do
 
 	gem 'jquery-rails'
 	gem "rails-backbone"
-	gem 'jquery-fileupload-rails', '0.3.0'
+	
 	gem "less-rails"
 	gem 'twitter-bootstrap-rails'
 

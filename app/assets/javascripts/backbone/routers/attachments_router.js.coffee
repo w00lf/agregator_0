@@ -1,7 +1,6 @@
 class Agrigator.Routers.AttachmentsRouter extends Backbone.Router
   initialize: (options) ->
-    @attachments = new Agrigator.Collections.AttachmentsCollection()
-    @attachments.reset options.attachments
+    @attachments = new Agrigator.Collections.AttachmentsCollection(options.attachments)
 
   routes:
     "new"      : "newAttachment"
@@ -13,8 +12,8 @@ class Agrigator.Routers.AttachmentsRouter extends Backbone.Router
     @view = new Agrigator.Views.Attachments.NewView(collection: @attachments)
 
   index: ->
-    @view = new Agrigator.Views.Attachments.IndexView(attachments: @attachments)
-    bind_pretty_image()
+    @view = new Agrigator.Views.Attachments.IndexView({ collection: @attachments })
+    @paginatorView = new Agrigator.Views.PaginatedView({ collection : @attachments })
 
   show: (id) ->
     attachment = @attachments.get(id)
