@@ -5,6 +5,10 @@ class Agrigator.Collections.AttachmentsCollection extends Backbone.Collection
   model: Agrigator.Models.Attachment
   url: '/attachments'
 
+  initialize: ->
+    console.log('initialize')
+    @fetch_w_params()
+
   query: ''
 
   per_page: 13
