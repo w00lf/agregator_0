@@ -1,9 +1,9 @@
-class Agrigator.Models.Attachment extends Backbone.Model
-  paramRoot: 'attachment'
+class Agrigator.Models.Tweet extends Backbone.Model
+  paramRoot: 'tweet'
 
-class Agrigator.Collections.AttachmentsCollection extends Backbone.Collection
-  model: Agrigator.Models.Attachment
-  url: '/attachments'
+class Agrigator.Collections.TweetsCollection extends Backbone.Collection
+  model: Agrigator.Models.Tweet
+  url: '/tweets'
 
   initialize: ->
     @fetch_w_params()

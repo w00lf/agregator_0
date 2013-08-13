@@ -1,4 +1,7 @@
 Agrigator::Application.routes.draw do
+  resources :tweets
+
+
   resources :attachments
 
 
