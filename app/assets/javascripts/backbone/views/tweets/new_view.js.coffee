@@ -9,7 +9,6 @@ class Agrigator.Views.Tweets.NewView extends Backbone.View
     "submit #new-tweet": "save"
     
   constructor: (options) ->
-    console.log(@collection)
     window.collection = @collection
     super(options)
     @model = new @collection.model()
@@ -23,9 +22,8 @@ class Agrigator.Views.Tweets.NewView extends Backbone.View
   save: (e) ->
     e.preventDefault()
     e.stopPropagation()
-
+    
     @model.unset("errors")
-
     @collection.create(@model.toJSON(),
       success: (tweet) =>
         @model = tweet

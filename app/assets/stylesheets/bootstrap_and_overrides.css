@@ -9,3 +9,19 @@
 .row-fluid [class*="span"]:first-child {
 	margin-left: 2.564102564102564%;
 }
+
+.truncated {
+	width: 500px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	cursor: pointer;
+}
+#tweets h5 span {
+	padding-left: 50px;
+	font-size: 1em;
+	font-weight: normal;
+}
+#tweets > div {
+	margin: 20px 0;
+}

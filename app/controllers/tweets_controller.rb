@@ -2,7 +2,7 @@ class TweetsController < ApplicationController
   # GET /tweets
   # GET /tweets.json
   def index
-    @tweets = Tweet.paginate(page: params[:page], per_page: (params[:per_page] || '15'))
+    @tweets = Tweet.order('id DESC').paginate(page: params[:page], per_page: (params[:per_page] || '15'))
 
     respond_to do |format|
       format.html # index.html.erb
@@ -57,9 +57,10 @@ class TweetsController < ApplicationController
   # PUT /tweets/1.json
   def update
     @tweet = Tweet.find(params[:id])
+    tweet = params[:tweet]
 
     respond_to do |format|
-      if @tweet.update_attributes(params[:tweet])
+      if @tweet.update_attributes(title: tweet[:title], content: tweet[:content])
         format.html { redirect_to @tweet, notice: 'Tweet was successfully updated.' }
         format.json { head :no_content }
       else

@@ -17,11 +17,17 @@ class Agrigator.Routers.MainsRouter extends Backbone.Router
 
 	tweetsIndex: ->
 		@view = new Agrigator.Views.Tweets.IndexView({ collection: @tweets })
+		@paginatorView = new Agrigator.Views.PaginatedView({ collection : @tweets })
 
 	tweetsNew: ->
+		@tweets = new Agrigator.Collections.TweetsCollection()
 		@view = new Agrigator.Views.Tweets.NewView({ collection: @tweets })		
+		@paginatorView.remove()
 
 	tweetsShow: (id)->
 
 	tweetsEdit: (id)->
+		tweet = @tweets.get(id)
+		@view = new Agrigator.Views.Tweets.EditView({ model: tweet })	
+		@paginatorView.remove()
   

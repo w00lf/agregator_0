@@ -7,12 +7,13 @@ class Agrigator.Views.PaginatedView extends Backbone.View
   events:
     "click .more" : "next_page"
 
-  page_show: 6
+  page_show: 5
 
   initialize: (params) ->
     #@collection.on('add', @render, @)
-    $(window).scroll(@detect_scroll);
     @render()
+    @detect_scroll()
+    $(window).scroll(@detect_scroll);
 
   isScrolledIntoView: (elem) ->
     docViewTop = $(window).scrollTop()
@@ -22,7 +23,6 @@ class Agrigator.Views.PaginatedView extends Backbone.View
     (elemBottom <= docViewBottom) and (elemTop >= docViewTop)
 
   detect_scroll: =>
-    console.log('scrolled')
     if (this.isScrolledIntoView(@el)) 
       @next_page()
 
@@ -74,20 +74,22 @@ class Agrigator.Views.PaginatedView extends Backbone.View
     e.preventDefault()
     page = $(e.target).text()
     @collection.page_active = page
-    @collection.fetch_w_params(false)
+    @collection.fetch_w_params(false, ->)
 
   change_quantity: (e) ->
     e.preventDefault()
     @collection.per_page = $(e.target).text()
     @collection.page_active = 1
-    @collection.fetch_w_params(true)
+    @collection.fetch_w_params(true, ->)
 
   next_page: ->
     page = @collection.page_active + 1
+    @page_count = Math.ceil(@collection.total_entries / @collection.per_page)
     if (page > @page_count) 
+      @$el.html('')
       return
     @collection.page_active = page
-    @collection.fetch_w_params(false)
+    @collection.fetch_w_params(false, ->)
 
 
   previus_page: (e) ->  
@@ -96,4 +98,4 @@ class Agrigator.Views.PaginatedView extends Backbone.View
     if (page < 1) 
       page = 1
     @collection.page_active = page
-    @collection.fetch_w_params(false)
+    @collection.fetch_w_params(false, ->)
