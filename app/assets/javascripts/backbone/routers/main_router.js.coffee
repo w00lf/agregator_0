@@ -4,6 +4,7 @@ class Agrigator.Routers.MainsRouter extends Backbone.Router
 		@attachments = new Agrigator.Collections.AttachmentsCollection()
 
 	routes:
+		"" 					: "attachments"
 		"attachments"		: "attachments"
 		"tweets/new"		: "tweetsNew"	
 		"tweets/:id"		: "tweetsShow"	
@@ -12,6 +13,7 @@ class Agrigator.Routers.MainsRouter extends Backbone.Router
 		
 
 	attachments: ->
+		@attachments.off("add");
 		@view = new Agrigator.Views.Attachments.IndexView({ collection: @attachments })
 		@paginatorView = new Agrigator.Views.PaginatedView({ collection : @attachments })
 
