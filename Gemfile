@@ -27,9 +27,10 @@ group :assets do
 end
 
 group :production do
-  gem 'pg'
   gem 'unicorn'
 end
+gem 'pg'
+gem 'mysql2'
 
 gem 'haml-rails'
 
@@ -50,6 +51,7 @@ gem "mongo_mapper"
 gem "mongo"
 gem 'bson_ext'
 
+gem 'thinking-sphinx'
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

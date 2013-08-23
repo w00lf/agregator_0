@@ -7,9 +7,21 @@ class @Agrigator.Collections.PaginatedCollection extends Backbone.Collection
 
 	order: ''
 
+	reload: (callback) ->
+		@fetch( 
+			data:  
+				order: @order
+				query: @query
+				per_page: @per_page
+				page: 1
+			success:
+				callback
+		)
+
+
 	fetch_w_params: (reload, callback) ->
 		if(reload) 
-		  page = 1
+		  @page_active = 1
 		@fetch( 
 			add: true
 			data:  

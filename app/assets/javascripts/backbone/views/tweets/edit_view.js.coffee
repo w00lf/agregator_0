@@ -14,13 +14,17 @@ class Agrigator.Views.Tweets.EditView extends Backbone.View
   update : (e) ->
     e.preventDefault()
     e.stopPropagation()
-    @model.content = CKEDITOR.instances.content.getData()
     console.log(CKEDITOR.instances.content.getData())
+    @model.set("content", CKEDITOR.instances.content.getData())
 
-    @model.save({ content: CKEDITOR.instances.content.getData() },
+    @model.save(null,
                 success : (tweet) =>
                   @model = tweet
+                  @destroy()
                   window.location.hash = "tweets")
+  destroy: ->
+    @undelegateEvents()
+    @$el.removeData().unbind()
 
   render : ->
     $(@el).html(@template(@model.toJSON() ))

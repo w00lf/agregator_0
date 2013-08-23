@@ -16,6 +16,7 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 	cursor: pointer;
+	height: 50px;
 }
 #tweets h5 span {
 	padding-left: 50px;
@@ -24,4 +25,7 @@
 }
 #tweets > div {
 	margin: 20px 0;
+}
+.search_bar {
+	min-height: 50px;
 }
