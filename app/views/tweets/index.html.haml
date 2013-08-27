@@ -1,21 +1,8 @@
-%h1 Listing tweets
+%div#container
+%div#pagination
 
-%table
-  %tr
-    %th Title
-    %th Content
-    %th
-    %th
-    %th
-
-  - @tweets.each do |tweet|
-    %tr
-      %td= tweet.title
-      %td= tweet.content
-      %td= link_to 'Show', tweet
-      %td= link_to 'Edit', edit_tweet_path(tweet)
-      %td= link_to 'Destroy', tweet, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
-%br
-
-= link_to 'New Tweet', new_tweet_path
+:javascript
+  $(function() {
+    window.router = new Agrigator.Routers.TweetsRouter();
+    Backbone.history.start();
+  });

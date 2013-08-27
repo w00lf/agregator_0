@@ -30,7 +30,7 @@ class Agrigator.Views.Tweets.NewView extends Backbone.View
       success: (tweet) =>
         @model = tweet
         @destroy()
-        window.location.hash = "tweets"
+        window.location.hash = ""
 
       error: (tweet, jqXHR) =>
         @model.set({errors: $.parseJSON(jqXHR.responseText)})

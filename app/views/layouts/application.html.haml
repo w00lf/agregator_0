@@ -26,12 +26,15 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          %a.brand(href="#") Agrigator
+          %a.brand(href="/") Agrigator
           .container.nav-collapse
             %ul.nav
-              %li= link_to "Attachments", '#attachments'
-              %li= link_to "Tweets", '#tweets'
-
+              %li= link_to "Attachments", '/attachments'
+              %li= link_to "Tweets", '/tweets'
+            - if user_signed_in?
+              = link_to(destroy_user_session_path, {:method => :delete, :id=> 'log_out'}) do
+                %i.icon-arrow-right
+                = t("log_out")
     .container-fluid
 
       .row-fluid

@@ -1,7 +1,7 @@
 class @Agrigator.Collections.PaginatedCollection extends Backbone.Collection
 	query: ''
 
-	per_page: 13
+	per_page: 5
 
 	page_active: 1
 
