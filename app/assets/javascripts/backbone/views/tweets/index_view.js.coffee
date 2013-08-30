@@ -11,7 +11,8 @@ class Agrigator.Views.Tweets.IndexView extends Backbone.View
   initialize: () ->
     @collection.on('add', @addOne, @)
     @collection.on('reset', @addAll, @)
-    @collection.fetch_w_params(true, @render)
+    @collection.fetch_w_params(true)
+    @render()
 
   addAll: () =>
     @$el.find("#tweets").html('')
@@ -28,5 +29,4 @@ class Agrigator.Views.Tweets.IndexView extends Backbone.View
 
   render: =>
     @$el.html(@template())
-    @addAll()
     return this

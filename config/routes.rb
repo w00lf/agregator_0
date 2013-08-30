@@ -1,4 +1,5 @@
 Agrigator::Application.routes.draw do
+
   mount Ckeditor::Engine => '/ckeditor'
 
   resources :tweets
@@ -9,7 +10,7 @@ Agrigator::Application.routes.draw do
 
   devise_for :users
 
-  resources :attacments
+  resources :categories
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

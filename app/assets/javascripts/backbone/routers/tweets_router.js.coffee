@@ -1,12 +1,13 @@
 class Agrigator.Routers.TweetsRouter extends Backbone.Router
   initialize: (options) ->
     @tweets = new Agrigator.Collections.TweetsCollection()
+    @categories = new Agrigator.Collections.CategoriesCollection()
 
   routes:
     "new"      : "newTweet"
     "index"    : "index"
     ":id/edit" : "edit"
-    ".*"        : "index"
+    ".*"       : "index"
 
   newTweet: ->
     @tweets = new Agrigator.Collections.TweetsCollection()
@@ -15,6 +16,7 @@ class Agrigator.Routers.TweetsRouter extends Backbone.Router
 
   index: ->
     @view = new Agrigator.Views.Tweets.IndexView({ collection: @tweets })
+    @categories_view = new Agrigator.Views.Categories.IndexView({ collection: @categories })
     @paginatorView = new Agrigator.Views.PaginatedView({ collection : @tweets })
 
   edit: (id) ->
