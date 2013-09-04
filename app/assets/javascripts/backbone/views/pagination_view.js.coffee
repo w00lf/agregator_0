@@ -11,6 +11,7 @@ class Agrigator.Views.PaginatedView extends Backbone.View
 
   initialize: (params) ->
     #@collection.on('add', @render, @)
+    @collection.on('reset', @render, @)
     @render()
     @detect_scroll()
     $(window).scroll(@detect_scroll);
@@ -28,6 +29,7 @@ class Agrigator.Views.PaginatedView extends Backbone.View
 
 
   render: (eventName) -> 
+    console.log("reseted")
     @page_show = 6
     @page_count = Math.ceil(@collection.total_entries / @collection.per_page)
     if (@page_count <= @page_show) 

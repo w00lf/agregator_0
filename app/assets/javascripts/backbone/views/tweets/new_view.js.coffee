@@ -3,7 +3,7 @@ Agrigator.Views.Tweets ||= {}
 class Agrigator.Views.Tweets.NewView extends Backbone.View
   template: JST["backbone/templates/tweets/new"]
 
-  el: '#container'
+  el: '#tweet_form'
 
   events:
     "submit #new-tweet": "save"
@@ -24,13 +24,15 @@ class Agrigator.Views.Tweets.NewView extends Backbone.View
     e.stopPropagation()
 
     @model.set("content", CKEDITOR.instances.content.getData())
-
     @model.unset("errors")
     @collection.create(@model.toJSON(),
       success: (tweet) =>
+        view = new Agrigator.Views.Tweets.TweetView({model : tweet})
+        $("#tweets").prepend(view.render().el)
+        @$el.parents('div').find('#add_tweet').add("#tweet_form").toggle()
+        @$el.html('')
         @model = tweet
         @destroy()
-        window.location.hash = ""
 
       error: (tweet, jqXHR) =>
         @model.set({errors: $.parseJSON(jqXHR.responseText)})
@@ -39,7 +41,7 @@ class Agrigator.Views.Tweets.NewView extends Backbone.View
   destroy: ->
     @undelegateEvents()
     @$el.removeData().unbind()
-    
+
 
   render: ->
     $(@el).html(@template(@model.toJSON() ))

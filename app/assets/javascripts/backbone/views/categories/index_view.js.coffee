@@ -5,13 +5,11 @@ class Agrigator.Views.Categories.IndexView extends Backbone.View
   
   events:
     "click #add_category a" : "add_category"
-    "keyup #save_category input" : "save_category"
 
   el: '#categories'
 
   initialize: () ->
     @collection.bind('reset', @addAll)
-    @collection.on('add', @addOne, @)
     @collection.fetch()
     @render()
 
@@ -19,28 +17,24 @@ class Agrigator.Views.Categories.IndexView extends Backbone.View
     @collection.each(@addOne)
 
   addOne: (categories) =>
-    view = new Agrigator.Views.Categories.CategoriesView({model : categories})
-    @$el.append(view.render().el)
+    if (typeof(categories) != 'undefined')
+      view = new Agrigator.Views.Categories.CategoriesView({model : categories})
+      @$el.append(view.render().el)
+  
+  addedOne: (categories) =>
+    @addOne(categories)
+    @toggle_add()
 
   add_category: (e)->
     e.preventDefault()
     e.stopPropagation()
-    @$el.find('#add_category').add("#save_category").toggle()
-
-  save_category: (e)->
-    code = if e.keyCode then e.keyCode else e.which
-
-    if(code == 13) 
-      @model = new @collection.model()
-      @model.set("title", @$el.find("input").val())
-      @collection.create(@model.toJSON(),      
-        success: (tweet) =>
-          @model = tweet
-          console.log(@model))
-      @$el.find('#add_category').add("#save_category").toggle()
+    @toggle_add()
+  
+  toggle_add: ()->
+    @$el.find('#add_category').add("#form_category").toggle()
 
   render: =>
     @$el.html(@template())
-    @$el.find("#save_category").hide()
+    @$el.find("#form_category").hide()
     @addAll()
     return this
