@@ -4,6 +4,3 @@ class Agrigator.Models.Tweet extends Backbone.Model
 class Agrigator.Collections.TweetsCollection extends Agrigator.Collections.PaginatedCollection
 	model: Agrigator.Models.Tweet
 	url: '/tweets'
-
-	setCategory: (id)->
-		@additional_params["category"] = id

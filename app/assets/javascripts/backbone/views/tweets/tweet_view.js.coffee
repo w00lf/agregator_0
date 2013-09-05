@@ -5,6 +5,7 @@ class Agrigator.Views.Tweets.TweetView extends Backbone.View
 
   events:
     "click .destroy" : "destroy"
+    "click .edit"     : "show_edit_form"
     "click .tweet_content" : "show_full"
     "mouseover" : "control_panell"
     "mouseout" : "hide_control_pannell"
@@ -22,8 +23,13 @@ class Agrigator.Views.Tweets.TweetView extends Backbone.View
   destroy: () ->
     @model.destroy()
     this.remove()
-
     return false
+
+  show_edit_form: (e)->
+    e.preventDefault()
+    e.stopPropagation()
+    view = new Agrigator.Views.Tweets.EditView({ model: @model })
+    @$el.html(view.render().el)
 
   render: ->
     $(@el).html(@template(@model.toJSON() ))

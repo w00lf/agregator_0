@@ -10,7 +10,6 @@ class Agrigator.Views.PaginatedView extends Backbone.View
   page_show: 5
 
   initialize: (params) ->
-    #@collection.on('add', @render, @)
     @collection.on('reset', @render, @)
     @render()
     @detect_scroll()
@@ -29,7 +28,6 @@ class Agrigator.Views.PaginatedView extends Backbone.View
 
 
   render: (eventName) -> 
-    console.log("reseted")
     @page_show = 6
     @page_count = Math.ceil(@collection.total_entries / @collection.per_page)
     if (@page_count <= @page_show) 
@@ -60,7 +58,11 @@ class Agrigator.Views.PaginatedView extends Backbone.View
         nav_begin = 1
       nav_end = @page_count
       right_dots = false    
-
+    console.log("total_entries #{@collection.total_entries} length: #{@collection.length}")
+    if (@collection.length == 0 || @collection.total_entries <= @collection.length)
+      @$el.html('')
+      return
+    console.log("started render")
     @$el.html(@template({ 
       link: @link, 
       page_count: @page_count, 
@@ -76,13 +78,13 @@ class Agrigator.Views.PaginatedView extends Backbone.View
     e.preventDefault()
     page = $(e.target).text()
     @collection.page_active = page
-    @collection.fetch_w_params(false, ->)
+    @collection.fetch_w_params(true, ->)
 
   change_quantity: (e) ->
     e.preventDefault()
     @collection.per_page = $(e.target).text()
     @collection.page_active = 1
-    @collection.fetch_w_params(true, ->)
+    @collection.fetch_w_params(false, ->)
 
   next_page: ->
     page = @collection.page_active + 1
@@ -91,7 +93,7 @@ class Agrigator.Views.PaginatedView extends Backbone.View
       @$el.html('')
       return
     @collection.page_active = page
-    @collection.fetch_w_params(false, ->)
+    @collection.fetch_w_params(true, ->)
 
 
   previus_page: (e) ->  
@@ -100,4 +102,4 @@ class Agrigator.Views.PaginatedView extends Backbone.View
     if (page < 1) 
       page = 1
     @collection.page_active = page
-    @collection.fetch_w_params(false, ->)
+    @collection.fetch_w_params(true, ->)

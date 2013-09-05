@@ -13,10 +13,11 @@ class Agrigator.Views.Tweets.NewView extends Backbone.View
     super(options)
     @model = new @collection.model()
     
-
     @model.bind("change:errors", () =>
       this.render()
     )
+    if (typeof(window.tweets.additional_params.category_id) != 'undefined')
+      @current_category = window.tweets.additional_params.category_id
     @render()
 
   save: (e) ->
@@ -24,7 +25,10 @@ class Agrigator.Views.Tweets.NewView extends Backbone.View
     e.stopPropagation()
 
     @model.set("content", CKEDITOR.instances.content.getData())
+    if (@current_category)
+      @model.set("content", CKEDITOR.instances.content.getData())
     @model.unset("errors")
+      
     @collection.create(@model.toJSON(),
       success: (tweet) =>
         view = new Agrigator.Views.Tweets.TweetView({model : tweet})
@@ -42,10 +46,17 @@ class Agrigator.Views.Tweets.NewView extends Backbone.View
     @undelegateEvents()
     @$el.removeData().unbind()
 
+  addCategories: (category)->
+    params = 
+      value : category.get('id')
+      text : category.get('title')
+    if parseInt(@current_category) == parseInt(category.get('id'))
+      params.selected = "selected"
+    $(@el).find('select').append($('<option>', params ))
 
   render: ->
     $(@el).html(@template(@model.toJSON() ))
-
+    window.categories.forEach(@addCategories, @)
     this.$("form").backboneLink(@model)
     if (CKEDITOR.instances['content']) 
       CKEDITOR.remove(CKEDITOR.instances['content']);

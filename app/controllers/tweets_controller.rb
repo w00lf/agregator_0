@@ -2,10 +2,17 @@ class TweetsController < ApplicationController
   # GET /tweets
   # GET /tweets.json
   def index
-    if !params[:category].blank?
-      @tweets = Category.find(params[:category]).tweets.paginate(page: params[:page], per_page: (params[:per_page] || '15'))
-    elsif !params[:query].blank?
-      @tweets = Tweet.search(params[:query], :order => :created_at, :sort_mode => :desc)  
+    if !params[:query].blank?
+      category = params[:category_id].blank? ? Category.all.map(&:id) : params[:category_id] 
+      @tweets = Tweet.search(params[:query], 
+                              :order => :created_at, 
+                              :sort_mode => :desc, 
+                              :with => {:category_id => category},
+                              page: params[:page], 
+                              per_page: (params[:per_page] || '15'))   unless params[:query].blank?
+
+    elsif !params[:category_id].blank? 
+      @tweets = Category.find(params[:category_id]).tweets.paginate(page: params[:page], per_page: (params[:per_page] || '15')) 
     else
       @tweets = Tweet.order('id DESC').paginate(page: params[:page], per_page: (params[:per_page] || '15'))
     end

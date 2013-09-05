@@ -6,7 +6,7 @@ class Agrigator.Views.Attachments.IndexView extends Backbone.View
 
   initialize: () ->
     @collection.on('add', @addOne, @)
-    @collection.fetch_w_params(true, @render)
+    @collection.fetch_w_params(false, @render)
 
   addAll: () =>
     @collection.forEach(@addOne, @)
