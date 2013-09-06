@@ -26,11 +26,16 @@ class Agrigator.Views.Categories.CategoriesView extends Backbone.View
   tweets_category: (e)->
     e.preventDefault()
     e.stopPropagation()
+    @set_selected()
     cat_id = @model.get('id')
     window.tweets.additional_params = {}
     window.tweets.additional_params['category_id'] = cat_id
     window.router.navigate("#category/#{cat_id}")
     window.tweets.fetch_w_params(false, ->)
+
+  set_selected: ->
+    $('#categories > div').removeClass('selected')
+    @$el.addClass('selected')
 
   render: ->
     $(@el).html(@template(@model.toJSON() ))

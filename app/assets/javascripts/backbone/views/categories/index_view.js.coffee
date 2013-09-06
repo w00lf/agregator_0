@@ -36,5 +36,4 @@ class Agrigator.Views.Categories.IndexView extends Backbone.View
   render: =>
     @$el.html(@template())
     @$el.find("#form_category").hide()
-    @addAll()
     return this

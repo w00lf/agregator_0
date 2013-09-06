@@ -19,7 +19,7 @@
     = stylesheet_link_tag    "application", :media => "all" 
     = javascript_include_tag "application"      
   %body
-    .navbar.navbar-fluid-top
+    .navbar.navbar-fluid-top.plain-naw-bar
       .navbar-inner
         .container-fluid
           %a.btn.btn-navbar(data-target=".nav-collapse" data-toggle="collapse")
@@ -35,7 +35,7 @@
               = link_to(destroy_user_session_path, {:method => :delete, :id=> 'log_out'}) do
                 %i.icon-arrow-right
                 = t("log_out")
-    .container-fluid
+    .container-fluid.content
 
       .row-fluid
         = bootstrap_flash

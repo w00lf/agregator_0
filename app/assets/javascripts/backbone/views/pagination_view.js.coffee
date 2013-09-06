@@ -58,11 +58,11 @@ class Agrigator.Views.PaginatedView extends Backbone.View
         nav_begin = 1
       nav_end = @page_count
       right_dots = false    
-    console.log("total_entries #{@collection.total_entries} length: #{@collection.length}")
+    
     if (@collection.length == 0 || @collection.total_entries <= @collection.length)
       @$el.html('')
       return
-    console.log("started render")
+    
     @$el.html(@template({ 
       link: @link, 
       page_count: @page_count, 

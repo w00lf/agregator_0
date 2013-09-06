@@ -1,7 +1,27 @@
 // Place all the styles related to the main controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+body {
+	background: rgb(202, 196, 196) !important;
+}
 #log_out {
 	float: right;
 	padding: 10px 20px;
+}
+.plain-naw-bar {
+	margin-bottom: 0;
+}
+.content {
+	padding: 0 0 0 10px;
+}
+#categories {
+	margin-left: 0;
+	padding-left: 30px;
+}
+#main_container {
+	border-top: 1px solid black;
+}
+
+#categories .selected {
+	box-shadow: 0 0 5px black;
 }

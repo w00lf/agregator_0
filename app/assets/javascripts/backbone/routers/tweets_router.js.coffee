@@ -10,6 +10,8 @@ class Agrigator.Routers.TweetsRouter extends Backbone.Router
     ".*"                    : "index"
 
   index: ->
+    if (@view)
+      @view.clean()
     params = @get_params()
     @run_index(params)
 
@@ -23,13 +25,19 @@ class Agrigator.Routers.TweetsRouter extends Backbone.Router
 
   get_params: (name, variable)->
     result = { collection : window.tweets }
+    result.additional = {}
     if (typeof(variable) != 'undefined')
-      result[name] = variable
+      result.additional[name] = variable
     return result
 
   run_index: (params)->
+    window.tweets.off()
+    window.categories.off()
     @view = new Agrigator.Views.Tweets.IndexView( params )
     @paginatorView = new Agrigator.Views.PaginatedView({ collection : window.tweets })  
+    @categories_view = new Agrigator.Views.Categories.IndexView({ collection: window.categories })
+    @categories_new_view = new Agrigator.Views.Categories.NewView({ collection: window.categories })
+    
 
   edit: (id) ->
     tweet = @tweets.get(id)
